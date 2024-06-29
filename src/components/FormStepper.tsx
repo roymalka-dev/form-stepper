@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { IForm, IFormInitialValues, ITab } from "../types/form.types";
 import { generateValidationSchemas } from "../utils/generateValidationSchema";
 import { generateInitialValues } from "../utils/generateInitialValues";
-import { Form, Formik, FormikHelpers } from "formik";
+import { Form, Formik, FormikHelpers, useFormikContext } from "formik";
 import { Box, Button, Step, StepLabel, Stepper } from "@mui/material";
 import DynamicField from "./DynamicField";
 import {
@@ -26,6 +26,7 @@ const FormStepper: React.FC<IForm> = ({
   const validationSchemas = generateValidationSchemas(tabs);
   const initialValues = generateInitialValues(tabs);
   const storageKey = "form-stepper-data";
+  const { resetForm } = useFormikContext<any>();
 
   useEffect(() => {
     if (useCache) {
@@ -38,6 +39,7 @@ const FormStepper: React.FC<IForm> = ({
 
   const handleResetForm = () => {
     setActiveStep(0);
+    resetForm();
     if (useCache) {
       removeFromLocalStorage(storageKey);
     }

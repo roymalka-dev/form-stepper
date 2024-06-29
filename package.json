@@ -1,6 +1,6 @@
 {
   "name": "form-stepper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "form stepper with formik and material ui",
   "main": "dist/index.js",
   "scripts": {
@@ -11,9 +11,17 @@
   "files": [
     "dist"
   ],
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://https://github.com/roymalka-dev/form-stepper.git"
+  },
+  "keywords": [
+    "react",
+    "typescript",
+    "components"
+  ],
+  "author": "Roy Malka",
+  "license": "MIT",
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
@@ -23,7 +31,6 @@
     "lodash": "^4.17.21",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-scripts": "^5.0.1",
     "yup": "^1.4.0"
   },
   "devDependencies": {
