@@ -9,15 +9,15 @@ export const generateInitialValues = (
       switch (field.type) {
         case "checkbox":
           acc[field.name] =
-            currentValues[field.name] ?? field.initialValues ?? false;
+            currentValues[field.name] ?? field.initialValues ?? undefined ?? [];
           break;
         case "radio":
           acc[field.name] =
-            currentValues[field.name] ?? field.initialValues ?? null;
+            currentValues[field.name] ?? field.initialValues ?? undefined ?? "";
           break;
         case "select":
           acc[field.name] =
-            currentValues[field.name] ?? field.initialValues ?? null;
+            currentValues[field.name] ?? field.initialValues ?? undefined ?? "";
           break;
         case "number":
           acc[field.name] =
@@ -29,10 +29,9 @@ export const generateInitialValues = (
           break;
 
         case "date":
+        case "time":
           acc[field.name] =
-            currentValues[field.name] ??
-            field.initialValues ??
-            new Date().toISOString().split("T")[0];
+            currentValues[field.name] ?? field.initialValues ?? "00:00";
           break;
         case "multi-input":
           acc[field.name] = currentValues[field.name] ??
@@ -48,7 +47,7 @@ export const generateInitialValues = (
           break;
         default:
           acc[field.name] =
-            currentValues[field.name] ?? field.initialValues ?? null;
+            currentValues[field.name] ?? field.initialValues ?? "";
       }
     });
     return acc;

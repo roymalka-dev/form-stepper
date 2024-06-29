@@ -1,6 +1,6 @@
 {
   "name": "form-stepper",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "form stepper with formik and material ui",
   "main": "dist/index.js",
   "scripts": {

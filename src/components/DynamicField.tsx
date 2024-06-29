@@ -7,8 +7,10 @@ import FormMultiSelectField from "./fields/FormMultiSelectField";
 import FormAutocompleteField from "./fields/FormAutocompleteField";
 import FormConditionalSelect from "./fields/FormConditionalSelectField";
 import FormFileUploadField from "./fields/FormFileUploadField";
-import FormAsyncSearchField from "./fields/FormAsyncSearchFieldProps";
+import FormAsyncSearchField from "./fields/FormAsyncSearchField";
 import FormRadioField from "./fields/FormRadioField";
+import FormCheckBoxField from "./fields/FormCheckBoxField";
+import FormSelectField from "./fields/FormSelectField";
 interface DynamicFieldProps {
   props: IField;
   messageHandler: (message: string) => void;
@@ -36,6 +38,11 @@ const DynamicField: React.FC<DynamicFieldProps> = ({
                 messageHandler={messageHandler}
               />
             );
+          case "select":
+            return <FormSelectField props={props} />;
+
+          case "checkbox":
+            return <FormCheckBoxField props={props} />;
           case "search":
             return <FormAsyncSearchField props={props} />;
           case "radio":
