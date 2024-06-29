@@ -13,11 +13,11 @@ export const generateInitialValues = (
           break;
         case "radio":
           acc[field.name] =
-            currentValues[field.name] ?? field.initialValues ?? "";
+            currentValues[field.name] ?? field.initialValues ?? null;
           break;
         case "select":
           acc[field.name] =
-            currentValues[field.name] ?? field.initialValues ?? "";
+            currentValues[field.name] ?? field.initialValues ?? null;
           break;
         case "number":
           acc[field.name] =

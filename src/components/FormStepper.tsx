@@ -26,7 +26,6 @@ const FormStepper: React.FC<IForm> = ({
   const validationSchemas = generateValidationSchemas(tabs);
   const initialValues = generateInitialValues(tabs);
   const storageKey = "form-stepper-data";
-  const { resetForm } = useFormikContext<any>();
 
   useEffect(() => {
     if (useCache) {
@@ -39,7 +38,6 @@ const FormStepper: React.FC<IForm> = ({
 
   const handleResetForm = () => {
     setActiveStep(0);
-    resetForm();
     if (useCache) {
       removeFromLocalStorage(storageKey);
     }

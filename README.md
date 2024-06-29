@@ -41,107 +41,235 @@ yarn add your-package-name
 
 Here's an example of how to use the \`FormStepper\` component from this package:
 
-\`\`\`tsx
-import React from 'react';
-import { Formik, Form } from 'formik';
-import { FormStepper } from 'your-package-name';
+```tsx
+import { FormStepper, IFormInitialValues, ITab } from "form-stepper";
+import * as yup from "yup";
+const tabs: ITab[] = [
+  {
+    name: "First Tab",
+    fields: [
+      {
+        label: "Text Field",
+        name: "text_field",
+        type: "text",
+        initialValues: "Sample text",
+        validations: yup.string().required("Text field is required"),
+        disabled: false,
+        hidden: false,
+        info: "Enter some text",
+        imageExample: "https://via.placeholder.com/150",
+      },
+      {
+        label: "Number Field",
+        name: "number_field",
+        type: "number",
+        initialValues: 42,
+        validations: yup.number().required("Number field is required"),
+        info: "Enter a number",
+      },
+      {
+        label: "Email Field",
+        name: "email_field",
+        type: "email",
+        validations: yup
+          .string()
+          .email("Invalid email format")
+          .required("Email field is required"),
+        info: "Enter your email address",
+      },
+      {
+        label: "Password Field",
+        name: "password_field",
+        type: "password",
+        validations: yup.string().required("Password field is required"),
+        info: "Enter your password",
+      },
+      {
+        label: "Date Field",
+        name: "date_field",
+        type: "date",
+        initialValues: new Date(),
+        validations: yup.date().required("Date field is required"),
+        info: "Select a date",
+      },
+      {
+        label: "Time Field",
+        name: "time_field",
+        type: "time",
+        validations: yup.string().required("Time field is required"),
+        info: "Select a time",
+      },
+      {
+        label: "Select Field",
+        name: "select_field",
+        type: "select",
+        options: ["Option 1", "Option 2", "Option 3"],
+        validations: yup.string().required("Select field is required"),
+        info: "Select an option",
+      },
+      {
+        label: "Radio Field",
+        name: "radio_field",
+        type: "radio",
+        options: ["Option A", "Option B", "Option C"],
+        validations: yup.string().required("Radio field is required"),
+        info: "Select an option",
+      },
+      {
+        label: "Checkbox Field",
+        name: "checkbox_field",
+        type: "checkbox",
+        options: ["Option X", "Option Y", "Option Z"],
+        validations: yup
+          .array()
+          .of(yup.string())
+          .min(1, "Select at least one option"),
+        info: "Select one or more options",
+      },
+      {
+        label: "Textarea Field",
+        name: "textarea_field",
+        type: "textarea",
+        validations: yup.string().required("Textarea field is required"),
+        info: "Enter text",
+      },
+      {
+        label: "Multi-Select Field",
+        name: "multi_select_field",
+        type: "multi-select",
+        options: ["Option 1", "Option 2", "Option 3"],
+        validations: yup
+          .array()
+          .of(yup.string())
+          .min(1, "Select at least one option"),
+        info: "Select one or more options",
+      },
+      {
+        label: "File Upload Field",
+        name: "file_upload_field",
+        type: "file",
+        validations: yup.mixed().required("File upload field is required"),
+        info: "Upload a file",
+        maxFileSize: 1024 * 1024, // 1MB
+        supportedFormats: ["image/jpeg", "image/png"],
+        fileUploadText: "Upload your file",
+        fileRemoveText: "Remove the file",
+      },
+      {
+        label: "Multi-Input Field",
+        name: "multi_input_field",
+        type: "multi-input",
+        validations: yup
+          .array()
+          .of(yup.string())
+          .min(1, "Enter at least one input"),
+        info: "Enter multiple inputs",
+        maxInputFields: 5,
+      },
+      {
+        label: "Autocomplete Field",
+        name: "autocomplete_field",
+        type: "auto-complete",
+        options: ["Option 1", "Option 2", "Option 3"],
+        validations: yup.string().required("Autocomplete field is required"),
+        info: "Start typing to see suggestions",
+      },
+      {
+        label: "Conditional Select Field",
+        name: "conditional_select_field",
+        type: "conditional-select",
+        options: ["Option 1", "Option 2", "Option 3"],
+        validations: yup
+          .string()
+          .required("Conditional select field is required"),
+        info: "Select an option",
+      },
+      {
+        label: "Search Field",
+        name: "search_field",
+        type: "search",
+        validations: yup.string().required("Search field is required"),
+        info: "Enter search term",
+        searchHandler: (search) => console.log(search),
+        searchDebounceMs: 300,
+      },
+    ],
+  },
+  {
+    name: "Second Tab",
+    fields: [
+      {
+        label: "Username",
+        name: "username",
+        type: "text",
+        validations: yup.string().required("Username is required"),
+        info: "Enter your username",
+      },
+    ],
+  },
+];
 
-const App = () => {
-const initialValues = {
-// Define initial values for the form fields
+const handleSubmit = (values: IFormInitialValues) => {
+  console.log(values);
+};
+const messageHandler = (message: string) => {
+  alert(message);
 };
 
-const handleSubmit = (values: any) => {
-console.log(values);
-};
-
-const formConfig = {
-tabs: [
-{
-name: "First Tab",
-fields: [
-{
-label: "First Name",
-name: "first_name",
-type: "text",
-initialValues: "John",
-validations: yup.string().required("First Name is required"),
-info: "Enter your first name",
-},
-{
-label: "Last Name",
-name: "last_name",
-type: "text",
-validations: yup.string().required("Last Name is required"),
-info: "Enter your last name",
-},
-],
-},
-{
-name: "Second Tab",
-fields: [
-{
-label: "Email",
-name: "email",
-type: "email",
-validations: yup.string().email("Invalid email format").required("Email is required"),
-info: "Enter your email address",
-},
-],
-},
-],
-submitFunction: handleSubmit,
-};
-
-return (
-<Formik initialValues={initialValues} onSubmit={handleSubmit}>
-
-<Form>
-<FormStepper {...formConfig} />
-</Form>
-</Formik>
-);
-};
+function App() {
+  return (
+    <>
+      <FormStepper
+        tabs={tabs}
+        submitFunction={handleSubmit}
+        submitText="Submit"
+        nextText="Next"
+        useCache={true}
+        messageHandler={messageHandler}
+      />
+    </>
+  );
+}
 
 export default App;
-\`\`\`
+```
 
 ## Configuration
 
 The \`FormStepper\` component takes a configuration object that defines the tabs and fields for the form. The configuration object should follow this structure:
 
-\`\`\`typescript
+```typescript
 interface IField {
-label: string;
-name: string;
-type: string;
-initialValues?: any;
-options?: any[];
-validations?: any;
-disabled?: boolean;
-hidden?: boolean;
-info?: string;
-imageExample?: string;
-fileUploader?: (file: File) => void;
-fileDelete?: (fileUrl: string) => void;
-maxFileSize?: number;
-supportedFormats?: string[];
+  label: string;
+  name: string;
+  type: string;
+  initialValues?: any;
+  options?: any[];
+  validations?: any;
+  disabled?: boolean;
+  hidden?: boolean;
+  info?: string;
+  imageExample?: string;
+  fileUploader?: (file: File) => void;
+  fileDelete?: (fileUrl: string) => void;
+  maxFileSize?: number;
+  supportedFormats?: string[];
 }
 
 interface ITab {
-name: string;
-fields: IField[];
+  name: string;
+  fields: IField[];
 }
 
 interface IForm {
-tabs: ITab[];
-submitFunction: (values: any) => void;
-messageHandler?: (message: string) => void;
-submitText?: string;
-nextText?: string;
-useCache?: boolean;
+  tabs: ITab[];
+  submitFunction: (values: any) => void;
+  messageHandler?: (message: string) => void;
+  submitText?: string;
+  nextText?: string;
+  useCache?: boolean;
 }
-\`\`\`
+```
 
 ## Components
 
