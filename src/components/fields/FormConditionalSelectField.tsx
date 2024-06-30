@@ -23,7 +23,7 @@ const FormConditionalSelect: React.FC<FormConditionalSelectProps> = ({
   const { setFieldValue, values } = useFormikContext<any>();
   const [field, meta, helpers] = useField(props.name);
   const [showTextField, setShowTextField] = useState(
-    values[props.name] ? true : false
+    values[props.name] === "Other"
   );
   const isError = Boolean(meta.touched && meta.error);
 
@@ -32,7 +32,7 @@ const FormConditionalSelect: React.FC<FormConditionalSelectProps> = ({
     setShowTextField(value === "Other");
     helpers.setValue(value);
     if (value !== "Other") {
-      setFieldValue(props.name, "");
+      setFieldValue(`${props.name}Other`, "");
     }
   };
 
@@ -47,9 +47,9 @@ const FormConditionalSelect: React.FC<FormConditionalSelectProps> = ({
             onChange={handleSelectChange}
             value={field.value || ""}
           >
-            {props.options?.map((option: any, index: number) => (
-              <MenuItem key={index} value={option}>
-                {option}
+            {props.options?.map((option, index) => (
+              <MenuItem key={index} value={option.toString()}>
+                {option.toString()}
               </MenuItem>
             ))}
             <MenuItem key="other" value="Other">
@@ -63,9 +63,8 @@ const FormConditionalSelect: React.FC<FormConditionalSelectProps> = ({
         {props.info && <InformationTooltip information={props.info} />}
         {props.imageExample && (
           <ImageExampleTooltip imageUrl={props.imageExample} />
-        )}{" "}
+        )}
       </Box>
-
       {showTextField && (
         <TextField
           label={props.label || "Please specify"}
@@ -73,7 +72,7 @@ const FormConditionalSelect: React.FC<FormConditionalSelectProps> = ({
           variant="outlined"
           margin="normal"
           value={values[`${props.name}Other`]}
-          onChange={(e) => setFieldValue(props.name, e.target.value)}
+          onChange={(e) => setFieldValue(`${props.name}Other`, e.target.value)}
         />
       )}
     </Box>
