@@ -10,7 +10,7 @@ import {
 import InformationTooltip from "../tooltip/InformationTooltip";
 import ImageExampleTooltip from "../tooltip/ImageExampleTooltip";
 import { IField } from "../../types/form.types";
-import debounce from "lodash/debounce";
+import { debounce } from "../../utils/debounce";
 
 interface FormAsyncSearchFieldProps {
   props: IField;
