@@ -27,15 +27,15 @@ A dynamic and customizable form stepper component library built with React and T
 
 Install the package via NPM or Yarn:
 
-\`\`\`bash
-npm install your-package-name
-\`\`\`
+```bash
+npm install from-stepper
+```
 
 or
 
-\`\`\`bash
-yarn add your-package-name
-\`\`\`
+```bash
+yarn add form-stepper
+```
 
 ## Usage
 

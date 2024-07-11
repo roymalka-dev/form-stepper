@@ -40,8 +40,8 @@ export interface IField {
   hidden?: boolean;
   info?: string;
   imageExample?: string;
-  fileUploader?: (file: File) => void;
-  fileDelete?: (fileUrl: string) => void;
+  fileUploader?: (file: File) => any;
+  fileDelete?: (...args: any) => void;
   searchHandler?: (search: string) => void;
   searchDebounceMs?: number;
   maxInputFields?: number;
@@ -69,4 +69,5 @@ export interface IForm {
   submitText?: string;
   nextText?: string;
   useCache?: boolean;
+  getStep?: (step: number) => void;
 }

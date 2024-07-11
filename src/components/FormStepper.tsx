@@ -19,6 +19,7 @@ const FormStepper: React.FC<IForm> = ({
   submitFunction,
   submitText = "submit",
   nextText = "next",
+  getStep = () => {},
   useCache = false,
 }) => {
   const [activeStep, setActiveStep] = React.useState<number>(0);
@@ -35,6 +36,10 @@ const FormStepper: React.FC<IForm> = ({
       }
     }
   }, [useCache]);
+
+  useEffect(() => {
+    getStep(activeStep);
+  }, [activeStep]);
 
   const handleResetForm = () => {
     setActiveStep(0);

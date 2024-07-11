@@ -30,23 +30,17 @@ const FormFileUploadField: React.FC<FormFileUploadFieldProps> = ({
   const isError = Boolean(meta.touched && meta.error);
 
   const fileUploader =
-    props.fileUploader ||
-    (async (file: File) => {
-      messageHandler(`File uploaded successfully: ${file.name}`);
-      return file.name;
-    });
+    props.fileUploader || ((file: File) => Promise.resolve(file));
   const fileDelete =
-    props.fileDelete ||
-    (async (fileUrl: string) => {
-      messageHandler(`File removed successfully: ${fileUrl}`);
-    });
+    props.fileDelete || ((fileUrl: string) => Promise.resolve());
 
   const handleFileUpload = async (file: File) => {
     setUploading(true);
     try {
-      const fileUrl = await fileUploader(file);
-      setFieldValue(props.name, fileUrl);
+      const response = await fileUploader(file);
+      setFieldValue(props.name, response);
       setSelectedFileName(file.name);
+      messageHandler(`File uploaded successfully: ${file.name}`);
     } catch (error) {
       messageHandler(`Error uploading file: ${error}`);
     } finally {
@@ -57,12 +51,11 @@ const FormFileUploadField: React.FC<FormFileUploadFieldProps> = ({
   const handleFileRemove = async () => {
     setUploading(true);
     try {
-      if (fileDelete) {
-        const fileUrl = values[props.name];
-        await fileDelete(fileUrl);
-      }
+      const file = values[props.name];
+      await fileDelete(file);
       setFieldValue(props.name, null);
       setSelectedFileName(null);
+      messageHandler(`File removed successfully`);
     } catch (error) {
       messageHandler(`Error removing file: ${error}`);
     } finally {
@@ -124,10 +117,10 @@ const FormFileUploadField: React.FC<FormFileUploadFieldProps> = ({
   };
 
   useEffect(() => {
-    const fileUrl = (values as Record<string, string>)[props.name];
-    if (fileUrl) {
-      const fileName = fileUrl.split("/").pop();
-      setSelectedFileName(fileName || null);
+    const file = values[props.name] as File;
+    if (file) {
+      const fileName = file?.name?.split("/").pop();
+      setSelectedFileName(fileName || "file");
     }
   }, [values, props.name]);
 
